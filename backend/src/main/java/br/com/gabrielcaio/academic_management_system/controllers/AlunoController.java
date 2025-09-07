@@ -1,6 +1,6 @@
 package br.com.gabrielcaio.academic_management_system.controllers;
 
-import br.com.gabrielcaio.academic_management_system.domain.Aluno;
+import br.com.gabrielcaio.academic_management_system.domain.model.Aluno;
 import br.com.gabrielcaio.academic_management_system.repositories.AlunoRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;

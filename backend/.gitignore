@@ -34,3 +34,5 @@ build/
 
 
 
+# Environment files (não comitar)
+.env

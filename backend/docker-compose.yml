@@ -3,25 +3,32 @@ services:
     build: .
     container_name: api_container
     ports:
-      - "8080:8080"
+      - "${API_PORT:-8080}:8080"
     depends_on:
       db:
         condition: service_healthy
     environment:
-      DB_URL: jdbc:postgresql://db:5432/db_academic_management_system
-      DB_USERNAME: postgres
-      DB_PASSWORD: 1981fla*
+      DB_HOST: ${DB_HOST:-db}
+      DB_PORT: ${DB_PORT:-5432}
+      DB_NAME: ${DB_NAME:-db_academic_management_system}
+      DB_USERNAME: ${DB_USERNAME:-postgres}
+      DB_PASSWORD: ${DB_PASSWORD}
+      DB_URL: jdbc:postgresql://${DB_HOST}:${DB_PORT}/${DB_NAME}
+      SPRING_SHOW_SQL: ${SPRING_SHOW_SQL:-false}
+      SPRING_DDL_AUTO: ${SPRING_DDL_AUTO:-update}
+      SPRING_FORMAT_SQL: ${SPRING_FORMAT_SQL:-true}
+      SERVER_PORT: ${SERVER_PORT:-8080}
     restart: always
 
   db:
     image: postgres:16
     container_name: postgres_container
     ports:
-      - "5433:5432"
+      - "${DB_HOST_PORT:-5433}:5432"
     environment:
-      POSTGRES_DB: db_academic_management_system
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: 1981fla*
+      POSTGRES_DB: ${POSTGRES_DB:-db_academic_management_system}
+      POSTGRES_USER: ${POSTGRES_USER:-postgres}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
     volumes:
       - postgres_data:/var/lib/postgresql/data
     healthcheck:
@@ -34,7 +41,7 @@ services:
     build: ../frontend
     container_name: frontend_container
     ports:
-      - "4200:80"
+      - "${FRONTEND_PORT:-4200}:80"
     depends_on:
       - api
     restart: always

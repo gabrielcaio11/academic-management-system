@@ -9,12 +9,12 @@ spring:
     hikari:
       initialization-fail-timeout: -1
   jpa:
-    show-sql: true
+    show-sql: ${SPRING_SHOW_SQL:false}
     hibernate:
-      ddl-auto: update
+      ddl-auto: ${SPRING_DDL_AUTO:update}
     properties:
       hibernate:
-        format_sql: true
+        format_sql: ${SPRING_FORMAT_SQL:true}
         dialect: org.hibernate.dialect.PostgreSQLDialect
 server:
-  port: 8080
+  port: ${SERVER_PORT:8080}
