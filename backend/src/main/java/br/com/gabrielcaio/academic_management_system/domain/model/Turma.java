@@ -26,9 +26,23 @@ public class Turma {
     @Column(nullable = false)
     private Integer semestre;
 
+
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "disciplina_id", nullable = false)
     private Disciplina disciplina;
+
+    @Column(length = 100)
+    private String horario;
+
+    @Column(length = 100)
+    private String local;
+
+    @Column(nullable = false)
+    private Integer vagas;
+
+    @Lob
+    private String planoDeEnsino;
 
     @JsonIgnore
     @OneToMany(mappedBy = "turma", cascade = CascadeType.ALL, orphanRemoval = true)

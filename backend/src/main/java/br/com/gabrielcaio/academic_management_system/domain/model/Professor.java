@@ -32,6 +32,11 @@ public class Professor {
     @Column(nullable = false)
     private String titulacao;
 
+    @ElementCollection
+    @CollectionTable(name = "tb_professor_especialidades", joinColumns = @JoinColumn(name = "professor_id"))
+    @Column(name = "especialidade")
+    private List<String> especialidades = new ArrayList<>();
+
     @JsonIgnore
     @OneToMany(mappedBy = "professor", cascade = CascadeType.ALL)
     private List<Disciplina> disciplinas = new ArrayList<>();

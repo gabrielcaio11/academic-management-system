@@ -23,8 +23,29 @@ public class Disciplina {
     @Column(nullable = false)
     private String nome;
 
+
     @Column(name = "carga_horaria", nullable = false)
     private Integer cargaHoraria;
+
+    @Lob
+    private String ementa;
+
+    @ManyToMany
+    @JoinTable(
+        name = "tb_disciplina_prerequisito",
+        joinColumns = @JoinColumn(name = "disciplina_id"),
+        inverseJoinColumns = @JoinColumn(name = "prerequisito_id")
+    )
+    private List<Disciplina> preRequisitos = new ArrayList<>();
+
+    @Lob
+    private String bibliografiaBasica;
+
+    @Lob
+    private String bibliografiaComplementar;
+
+    @Lob
+    private String sistemaAvaliacao;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "professor_id")
