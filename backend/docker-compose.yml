@@ -1,0 +1,43 @@
+services:
+  api:
+    build: .
+    container_name: api_container
+    ports:
+      - "8080:8080"
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      DB_URL: jdbc:postgresql://db:5432/db_academic_management_system
+      DB_USERNAME: postgres
+      DB_PASSWORD: 1981fla*
+    restart: always
+
+  db:
+    image: postgres:16
+    container_name: postgres_container
+    ports:
+      - "5433:5432"
+    environment:
+      POSTGRES_DB: db_academic_management_system
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 1981fla*
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}" ]
+      interval: 10s
+      retries: 5
+    restart: always
+
+  frontend:
+    build: ../frontend
+    container_name: frontend_container
+    ports:
+      - "4200:80"
+    depends_on:
+      - api
+    restart: always
+
+volumes:
+  postgres_data:

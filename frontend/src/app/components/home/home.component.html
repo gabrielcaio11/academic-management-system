@@ -1,0 +1,21 @@
+<section>
+  <h1>Home</h1>
+
+  <form [formGroup]="form" (ngSubmit)="submit()" novalidate>
+    <label>
+      Nome
+      <input formControlName="nome" placeholder="Nome" />
+    </label>
+    <label>
+      Email
+      <input formControlName="email" type="email" placeholder="email@exemplo.com" />
+    </label>
+    <button type="submit" [disabled]="form.invalid">Adicionar</button>
+  </form>
+
+  <ul>
+    <li *ngFor="let item of items">{{ item | json }}</li>
+  </ul>
+</section>
+
+
